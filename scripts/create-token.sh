@@ -25,6 +25,7 @@ if [ -n "$REPO" ]; then
 else
   URL=https://api.github.com/orgs/$ORG/actions/runners/registration-token
 fi
+  echo $URL
   TOKEN=$(curl -L \
   -X POST \
   -s \
