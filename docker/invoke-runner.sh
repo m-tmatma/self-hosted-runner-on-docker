@@ -1,4 +1,4 @@
-#/usr/bin/sh
+#!/bin/bash
 
 function show_usage() {
     echo "Usage: $0 <owner> [repo]"
@@ -6,8 +6,11 @@ function show_usage() {
     echo "  repo: the repository name"
 }
 
-OWNER=$1
 if [ -z "$OWNER" ]; then
+  show_usage
+  exit 1
+fi
+if [ -z "$REPO" ]; then
   show_usage
   exit 1
 fi
@@ -16,14 +19,12 @@ if [ -z "$GITHUB_ACCESS_TOKEN" ]; then
   echo please set GITHUB_ACCESS_TOKEN in adance
   exit 1
 fi
-
-REPO=$2
-ORG=$OWNER
-
 if [ -n "$REPO" ]; then
   URL=https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token
+  URL_TO_RUNNER=https://github.com/$OWNER/$REPO
 else
-  URL=https://api.github.com/orgs/$ORG/actions/runners/registration-token
+  URL=https://api.github.com/orgs/$OWNER/actions/runners/registration-token
+  URL_TO_RUNNER=https://github.com/$OWNER
 fi
   TOKEN=$(curl -L \
   -X POST \
@@ -32,6 +33,10 @@ fi
   -H "Authorization: Bearer $GITHUB_ACCESS_TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   $URL | jq -r '.token')
-echo $TOKEN
+#echo $TOKEN
 
+export RUNNER_ALLOW_RUNASROOT=1
 
+cd actions-runner
+./config.sh --unattended --url $URL_TO_RUNNER --token $TOKEN --ephemeral --labels L1,L2,L3
+./run.sh

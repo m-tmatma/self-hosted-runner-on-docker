@@ -8,7 +8,9 @@ RUN apt-get update && \
     jq \
     -y
 
-WORKDIR /actions-runner/
-COPY *.sh /actions-runner/
-RUN chmod +x /actions-runner/*.sh && \
+WORKDIR /workdir/
+COPY *.sh /workdir/
+RUN chmod +x /workdir/*.sh && \
     ./get-runner-files.sh
+
+CMD ["/workdir/invoke-runner.sh"]
