@@ -8,8 +8,7 @@ RUN apt-get update && \
     jq \
     -y
 
-COPY *.sh /root/
-WORKDIR /root/
-RUN chmod +x /root/*.sh && \
+WORKDIR /actions-runner/
+COPY *.sh /actions-runner/
+RUN chmod +x /actions-runner/*.sh && \
     ./get-runner-files.sh
-
