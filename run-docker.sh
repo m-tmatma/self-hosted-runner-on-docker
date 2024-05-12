@@ -7,13 +7,22 @@ function show_usage() {
 }
 
 function show_GITHUB_ACCESS_TOKEN() {
-    echo please set GITHUB_ACCESS_TOKEN in adance
+  echo "please set enviornment variable 'GITHUB_ACCESS_TOKEN' in advance."
 }
+
+function show_LABELS() {
+  echo "please set enviornment variable 'LABELS' in advance."
+}
+
 OWNER=$1
 REPO=$2
 
 if [ -z "$GITHUB_ACCESS_TOKEN" ]; then
   show_GITHUB_ACCESS_TOKEN
+  exit 1
+fi
+if [ -z "$LABELS" ]; then
+  show_LABELS
   exit 1
 fi
 if [ -z "$OWNER" ]; then
@@ -25,4 +34,5 @@ docker run --rm -it \
     -e OWNER=$OWNER \
     -e REPO=$REPO \
     -e GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN \
+    -e LABELS=$LABELS \
     self-hosted-runner

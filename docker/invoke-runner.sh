@@ -19,6 +19,11 @@ if [ -z "$GITHUB_ACCESS_TOKEN" ]; then
   echo please set GITHUB_ACCESS_TOKEN in adance
   exit 1
 fi
+if [ -z "$LABELS" ]; then
+  echo please set LABELS in adance
+  exit 1
+fi
+
 if [ -n "$REPO" ]; then
   URL=https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token
   URL_TO_RUNNER=https://github.com/$OWNER/$REPO
@@ -38,5 +43,5 @@ fi
 export RUNNER_ALLOW_RUNASROOT=1
 
 cd actions-runner
-./config.sh --unattended --url $URL_TO_RUNNER --token $TOKEN --ephemeral --labels L1,L2,L3
+./config.sh --unattended --url $URL_TO_RUNNER --token $TOKEN --ephemeral --labels $LABELS
 ./run.sh
