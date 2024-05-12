@@ -20,10 +20,6 @@ if [ -z "$OWNER" ]; then
   show_usage
   exit 1
 fi
-if [ -z "$REPO" ]; then
-  show_usage
-  exit 1
-fi
 
 docker run --rm -it \
     -e OWNER=$OWNER \
