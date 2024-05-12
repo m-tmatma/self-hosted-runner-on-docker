@@ -23,6 +23,10 @@ if [ -z "$LABELS" ]; then
   echo please set LABELS in adance
   exit 1
 fi
+if [ -z "$NAME" ]; then
+  echo please set NAME in adance
+  exit 1
+fi
 
 if [ -n "$REPO" ]; then
   URL=https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token
@@ -43,5 +47,5 @@ fi
 export RUNNER_ALLOW_RUNASROOT=1
 
 cd actions-runner
-./config.sh --unattended --url $URL_TO_RUNNER --token $TOKEN --ephemeral --labels $LABELS
+./config.sh --unattended --name $NAME-$(hostname) --url $URL_TO_RUNNER --token $TOKEN --ephemeral --labels $LABELS
 ./run.sh

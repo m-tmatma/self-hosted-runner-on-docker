@@ -29,10 +29,14 @@ if [ -z "$OWNER" ]; then
   show_usage
   exit 1
 fi
+if [ -z "$NAME" ]; then
+  NAME=$(hostname)
+fi
 
 docker run --rm -it \
     -e OWNER=$OWNER \
     -e REPO=$REPO \
     -e GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN \
+    -e NAME=$NAME \
     -e LABELS=$LABELS \
     self-hosted-runner
