@@ -6,6 +6,8 @@ RUN apt-get update && \
     curl \
     perl \
     jq \
+    git \
+    build-essential \
     -y
 
 WORKDIR /workdir/
