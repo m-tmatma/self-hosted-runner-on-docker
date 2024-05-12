@@ -9,5 +9,7 @@ RUN apt-get update && \
     -y
 
 COPY *.sh /root/
+WORKDIR /root/
 RUN chmod +x /root/*.sh && \
-    (cd /root && ./get-runner-files.sh)
+    ./get-runner-files.sh
+
