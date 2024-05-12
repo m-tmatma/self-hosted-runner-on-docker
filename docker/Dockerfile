@@ -6,6 +6,7 @@ RUN apt-get update && \
     curl \
     perl \
     jq \
+    repo \
     git \
     build-essential \
     -y
